@@ -15,7 +15,7 @@ client.once("ready", () => {
 })
 
 client.on("messageCreate", message => {
-  if (message.content.startsWith("/")) {
+  if (message.content.startsWith("^")) {
     if (message.content.substring(1) === "juguem?") {
       message.reply("ves obrint Stellaris");
     }
