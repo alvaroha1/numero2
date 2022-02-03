@@ -1,24 +1,47 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import Discord, { Intents } from "discord.js"
+import axios from "axios";
 
-// get discord token
 const token = process.env.DISCORD_TOKEN
+const url = "https://api.coincap.io/v2"; 
 
-// config Discord client
 const client = new Discord.Client({
-  // set guild and guild messages intents
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 
 });
 
-// login to discord
 client.login(token);
 
-// log a message when ready
 client.on("ready", () => {
-  console.log("Discord bot is ready!", client.user?.tag);
+  console.log("Discord bot is 🚀!", client.user?.tag);
 });
+
+const getPrice = async (ticker: string): Promise<number | undefined> => {
+  try {
+    const response = await axios.get(`${url}/rates/${ticker}`)
+    return response.data.data.rateUsd;
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
+const formatNumber = (num: number): string => {
+  if (typeof num === "string") {
+    num = Number(num);
+  }
+  return `$${num.toFixed(2)}`
+}
+
+client.on("messageCreate", async message => {
+  if (message.content.startsWith("price:")) {
+    const content = message.content.slice(6);
+    const price = await getPrice(content);
+    if (price) {
+      message.channel.send(`Current price of ${content} is ${formatNumber(price)}`);
+    }
+  }
+})
 
 client.on("messageCreate", message => {
   if (message.content.startsWith("^")) {
@@ -26,10 +49,4 @@ client.on("messageCreate", message => {
       message.reply("ves obrint Stellaris");
     }
   }
-})
-
-// on client messageCreate responds with message
-client.on("messageCreate", (message) => {
-  // log the message
-  console.log(message)
 })
