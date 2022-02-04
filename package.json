@@ -4,13 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev-2": "ts-node-dev src/index.ts",
-    "start-2": "ts-node src/index.ts",
-    "start:prod": "node dist/index.js",
-    "build-2": "tsc",
-    "watch": "tsc -w",
-    "tsc": "tsc",
-    "postinstall": "npm run tsc",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
     "prestart:dev": "npm run build",
     "dev": "nodemon dist/index.js",
     "prebuild": "rimraf ./dist",
@@ -29,6 +24,9 @@
   },
   "devDependencies": {
     "ts-node": "^10.4.0",
-    "ts-node-dev": "^1.1.8"
+    "ts-node-dev": "^1.1.8",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
+    "@typescript-eslint/parser": "^3.6.0",
+    "eslint": "^7.4.0"
   }
 }

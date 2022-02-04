@@ -41,12 +41,22 @@ client.on("messageCreate", async message => {
       message.channel.send(`Current price of ${content} is ${formatNumber(price)}`);
     }
   }
+
+  if (message.content.startsWith("")) {
+    const content = message.content.slice(6);
+    const price = await getPrice(content);
+    if (price) {
+      message.channel.send(`Current price of ${content} is ${formatNumber(price)}`);
+    }
+  }
 })
 
 client.on("messageCreate", message => {
   if (message.content.startsWith("^")) {
     if (message.content.substring(1) === "juguem?") {
       message.reply("ves obrint Stellaris");
+    } else if (message.content.startsWith("Que es")) {
+      message.reply("un bon feixista!");
     }
   }
 })
