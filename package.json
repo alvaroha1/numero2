@@ -8,7 +8,9 @@
     "start": "ts-node src/index.ts",
     "start:prod": "node dist/index.js",
     "build": "tsc",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "tsc": "tsc",
+    "postinstall": "npm run tsc"
   },
   "author": "",
   "license": "ISC",
